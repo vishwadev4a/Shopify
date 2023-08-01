@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--TODO Step 6: Change the order of items as move the Dashboard at the top. And update the navigation ids according to the names. Also, update the icons of the items. They are added in the drawable folder in form of vector.-->
+    <!--START-->
+    <!-- Update the icon of each item which are added in the drawable folder and remove the existing one as they are not in use anymore.-->
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_vector_dashboard"
+        android:title="@string/title_dashboard" />
+
+    <item
+        android:id="@+id/navigation_products"
+        android:icon="@drawable/ic_vector_products"
+        android:title="@string/title_products" />
+
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/ic_vector_orders"
+        android:title="@string/title_orders" />
+    <!--END-->
+</menu>
