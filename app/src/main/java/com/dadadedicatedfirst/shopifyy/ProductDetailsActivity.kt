@@ -2,23 +2,18 @@ package com.dadadedicatedfirst.shopifyy
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.ResourceCursorAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.dadadedicatedfirst.shopifyy.adapters.myproductlistadapter
-import com.dadadedicatedfirst.shopifyy.databinding.ActivityAddProductBinding
 import com.dadadedicatedfirst.shopifyy.databinding.ActivityProductDetailsBinding
 import com.dadadedicatedfirst.shopifyy.firestore.FirestoreClass
-import com.dadadedicatedfirst.shopifyy.models.Cartitem
 import com.dadadedicatedfirst.shopifyy.models.Product
 import com.dadadedicatedfirst.shopifyy.utils.Constants
 import com.dadadedicatedfirst.shopifyy.utils.GlideLoader
+import com.myshoppal.models.Cart
 
 class ProductDetailsActivity : BaseActivity() {
     private var mproductid:String=""
@@ -43,6 +38,7 @@ class ProductDetailsActivity : BaseActivity() {
         val view=binding.root
         setContentView(view)
         if(intent.hasExtra(Constants.EXTRA_PRODUCT_ID)){
+            Toast.makeText(this,mproductid,Toast.LENGTH_SHORT).show()
             mproductid=intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
         var productownerid:String=""
@@ -71,7 +67,7 @@ class ProductDetailsActivity : BaseActivity() {
         binding.btnGoToCart.visibility=View.VISIBLE
     }
     private fun addtocart(){
-        val addtocart=Cartitem(
+        val addtocart= Cart(
             FirestoreClass().getuserid(),
             mproductid,
             mproductdetails.title,

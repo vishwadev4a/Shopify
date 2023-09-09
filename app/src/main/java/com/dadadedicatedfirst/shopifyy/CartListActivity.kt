@@ -2,7 +2,6 @@ package com.dadadedicatedfirst.shopifyy
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -18,10 +17,11 @@ import com.dadadedicatedfirst.shopifyy.models.Cartitem
 import com.dadadedicatedfirst.shopifyy.models.Product
 import com.dadadedicatedfirst.shopifyy.utils.Constants
 import com.dadadedicatedfirst.shopifyy.utils.customtextview
+import com.myshoppal.models.Cart
 
 class CartListActivity : BaseActivity() {
     private lateinit var mproductlist:ArrayList<Product>
-    private lateinit var mcartlistitems:ArrayList<Cartitem>
+    private lateinit var mcartlistitems:ArrayList<Cart>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -53,7 +53,7 @@ class CartListActivity : BaseActivity() {
         getproductlist()
     }
 
-    fun successcartitemslist(cartlist:ArrayList<Cartitem>){
+    fun successcartitemslist(cartlist:ArrayList<Cart>){
 
         hideprogressdialog()
 
@@ -82,13 +82,13 @@ class CartListActivity : BaseActivity() {
             recyclerview.visibility=View.VISIBLE
             tv.visibility=View.GONE
             button.visibility=View.VISIBLE
-            val cartlistadapter=CartItemsListAdapter(this,cartlist)
+            val cartlistadapter=CartItemsListAdapter(this,mcartlistitems,true)
             recyclerview.layoutManager=LinearLayoutManager(this@CartListActivity)
             recyclerview.setHasFixedSize(true)
             recyclerview.adapter=cartlistadapter
             var subtotal:Double=0.0
             for(i in mcartlistitems){
-                val availablequantity=i.stock_quantity.toInt()
+                val availablequantity=i.stock_quantity.toInt()+0
                 if(availablequantity>0){
                     val price=i.price.toDouble()
                     val quantity=i.cart_quantity.toInt()
@@ -131,7 +131,7 @@ fun getcartitemslist(){
     }
     private fun getproductlist(){
         showprogressdialog()
-        FirestoreClass().getallproductslist(this)
+        FirestoreClass().getallproductslist(this@CartListActivity)
     }
 
     private fun setupactionbar(){

@@ -7,12 +7,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dadadedicatedfirst.shopifyy.*
-import com.dadadedicatedfirst.shopifyy.models.Address
-import com.dadadedicatedfirst.shopifyy.models.Cartitem
-import com.dadadedicatedfirst.shopifyy.models.Product
-import com.dadadedicatedfirst.shopifyy.models.User
+import com.dadadedicatedfirst.shopifyy.models.*
 import com.dadadedicatedfirst.shopifyy.ui.dashboard.DashboardFragment
 import com.dadadedicatedfirst.shopifyy.ui.home.ProductsFragment
+import com.dadadedicatedfirst.shopifyy.ui.notifications.OrdersFragment
 import com.dadadedicatedfirst.shopifyy.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,6 +18,8 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.myshoppal.models.Cart
+import com.myshoppal.models.Order
 
 class FirestoreClass:LoginActivity(){
     val mfirestore = FirebaseFirestore.getInstance()
@@ -42,10 +42,9 @@ class FirestoreClass:LoginActivity(){
         }
         return currentuserid
     }
-    fun getallproductslist(activity: CartListActivity){
+    fun getallproductslist(activity: Activity){
         mfirestore.collection(Constants.PRODUCTS).get().addOnSuccessListener {
             document->
-            activity.hideprogressdialog()
             val productlist:ArrayList<Product> = ArrayList()
             for(i in document.documents) {
                 val product=i.toObject(Product::class.java)!!
@@ -53,10 +52,25 @@ class FirestoreClass:LoginActivity(){
                 productlist.add(product)
 
             }
-            activity.successproductslistfromfirestore(productlist)
+
+            when(activity) {
+                is CartListActivity-> {
+                    activity.successproductslistfromfirestore(productlist)
+                }
+                is CheckoutActivity->{
+                    activity.successproductlistfromfirestore(productlist)
+                }
+            }
 
         }.addOnFailureListener{
-            activity.hideprogressdialog()
+            when(activity) {
+                is CartListActivity-> {
+                    activity.hideprogressdialog()
+                }
+                is CheckoutActivity->{
+                    activity.hideprogressdialog()
+                }
+            }
 
 
         }
@@ -171,9 +185,9 @@ fun updatemycart(context: Context,cartid: String,itemhashmap:HashMap<String,Any>
      fun cartlistget(activity:Activity) {
         mfirestore.collection(Constants.CART_ITEMS).whereEqualTo(Constants.USER_ID, getuserid())
             .get().addOnSuccessListener { document ->
-                val list: ArrayList<Cartitem> = ArrayList()
+                val list: ArrayList<Cart> = ArrayList()
                 for (i in document.documents) {
-                    val cartitem = i.toObject(Cartitem::class.java)!!
+                    val cartitem = i.toObject(Cart::class.java)!!
                     cartitem.id = i.id
                     list.add(cartitem)
 
@@ -181,6 +195,9 @@ fun updatemycart(context: Context,cartid: String,itemhashmap:HashMap<String,Any>
                 }
                 when (activity) {
                     is CartListActivity -> {
+                        activity.successcartitemslist(list)
+                    }
+                    is CheckoutActivity->{
                         activity.successcartitemslist(list)
                     }
                 }
@@ -244,7 +261,7 @@ fun updatemycart(context: Context,cartid: String,itemhashmap:HashMap<String,Any>
                 showerrorsnackbar(getString(R.string.productcouldnotbedeleted),true)
             }
     }
-    fun addcartitems(activity:ProductDetailsActivity,addtocart:Cartitem){
+    fun addcartitems(activity:ProductDetailsActivity, addtocart: Cart){
 
         mfirestore.collection(Constants.CART_ITEMS).document().set(addtocart, SetOptions.merge())
             .addOnSuccessListener {
@@ -273,6 +290,7 @@ fun updatemycart(context: Context,cartid: String,itemhashmap:HashMap<String,Any>
         mfirestore.collection(Constants.PRODUCTS).get().addOnSuccessListener { document->
             for(i in document.documents){
                 val product=i.toObject(Product::class.java)!!
+                Log.e("Bsdk",i.id)
                 product.product_id=i.id
                 productlist.add(product)
             }
@@ -358,7 +376,6 @@ fun updateaddress(activity: AddEditAddressActivity,address:Address,addressid:Str
     }
     fun getaddresslist(activity: AddressListActivity){
         mfirestore.collection(Constants.ADDRESSES).whereEqualTo(Constants.USER_ID,getuserid()).get().addOnSuccessListener { document->
-
             val addresslist:ArrayList<Address> = ArrayList()
             for(i in document.documents){
                 val address=i.toObject(Address::class.java)
@@ -371,6 +388,73 @@ fun updateaddress(activity: AddEditAddressActivity,address:Address,addressid:Str
             activity.hideprogressdialog()
         }
     }
+
+    fun placeorder(activity: CheckoutActivity,order: Order){
+
+        mfirestore.collection(Constants.ORDERS).document().set(order, SetOptions.merge()).addOnSuccessListener {
+            activity.orderplacedsuccess()
+
+
+
+
+        }
+            .addOnFailureListener{
+                activity.hideprogressdialog()
+
+
+
+            }
+    }
+
+    fun updatealldetails(activity:CheckoutActivity,cartlist:ArrayList<Cart>,order: Order) {
+        val writebatch = mfirestore.batch()
+
+        for (cart in cartlist) {
+            //producthashmap[Constants.STOCK_QUANTITY] =
+                //(cart.stock_quantity.toInt() - cart.cart_quantity.toInt()).toString()
+            val soldProduct=SoldProduct(
+                FirestoreClass().getuserid(),
+                cart.title,
+                cart.price,
+                cart.cart_quantity,
+                cart.image,
+                order.title,
+                order.orderdatetime,
+                order.sub_total_amount,
+                order.shipping_charge,
+                order.total_amount,
+                order.address
+            )
+           val document=mfirestore.collection(Constants.SOLD_PRODUCT).document(cart.product_id)
+            writebatch.set(document,soldProduct)
+        }
+
+        for (cartitem in cartlist) {
+            val document=mfirestore.collection(Constants.CART_ITEMS).document(cartitem.id)
+            val writeBatch=mfirestore.batch()
+            writebatch.delete(document)
+        }
+        activity.alldetailsupdatedsuccessfully()
+    }
+
+    fun getmyorderlist(fragment: OrdersFragment){
+        mfirestore.collection(Constants.ORDERS)
+            .whereEqualTo(Constants.USER_ID,getuserid())
+            .get()
+            .addOnSuccessListener {document->
+                val list:ArrayList<Order> = ArrayList()
+                for(i in document.documents){
+                    val orderitem=i.toObject(Order::class.java)!!
+                    orderitem.id=i.id
+                    list.add(orderitem)
+                }
+                fragment.populateorderslistinui(list)
+            }.addOnFailureListener{
+
+            }
+
+    }
+
 
 
 

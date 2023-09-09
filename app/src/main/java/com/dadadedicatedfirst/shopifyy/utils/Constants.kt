@@ -9,13 +9,16 @@ import com.dadadedicatedfirst.shopifyy.MainActivity
 import com.dadadedicatedfirst.shopifyy.UserProfile
 
 object Constants {
+    val SOLD_PRODUCT:String="sold_product"
     const val ORDERS:String="orders"
     val CART_ITEMS: String="cartitems"
     const val USERS:String="users"
     const val SHOPIFY_PREFERENCES:String="shopifyprefs"
     const val LOGGED_IN_USERNAME:String="loggedinusername"
     const val EXTRA_USER_DETAILS:String="extra_user_details"
+    const val STOCK_QUANTITY:String="stock_quantity"
     const val READ_STORAGE_CODE=2
+    const val EXTRA_MY_ODER_DETAILS:String="extramyorderdetails"
     const val PRODUCT_ID:String="product_id"
     const val PICK_IMAGE_REQUEST_CODE=2
     const val MALE:String="Male"

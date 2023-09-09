@@ -19,7 +19,8 @@ data class Order(
     val image: String = "",
     val sub_total_amount: String = "",
     val shipping_charge: String = "",
+    val orderdatetime:Long=0L,
     val total_amount: String = "",
-    var id: String = ""
+    var id: String = "",
 ) : Parcelable
 // END

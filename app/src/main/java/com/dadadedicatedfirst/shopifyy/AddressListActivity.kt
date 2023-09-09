@@ -30,15 +30,19 @@ class AddressListActivity : BaseActivity() {
         supportActionBar?.hide()
         window.decorView.systemUiVisibility= View.SYSTEM_UI_FLAG_FULLSCREEN
         setContentView(binding.root)
+
+
+
+
         val tvaddaddress:TextView=findViewById<TextView?>(R.id.tv_add_address)
         tvaddaddress.setOnClickListener{
+            val intent=Intent(this@AddressListActivity,AddEditAddressActivity::class.java)
             startActivityForResult(intent,Constants.ADD_ADDRESS_REQUEST_CODE)
         }
-        getaddresslist()
         if(intent.hasExtra(Constants.EXTRA_SELECT_ADDRESS)){
             mselectaddress=intent.getBooleanExtra(Constants.EXTRA_SELECT_ADDRESS,false)
         }
-        if(!mselectaddress){
+        if(mselectaddress){
              binding.tvTitle.text=resources.getString(R.string.title_select_address)
         }
     }
@@ -51,7 +55,9 @@ class AddressListActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== Activity.RESULT_OK){
-            getaddresslist()
+            if(requestCode==Activity.RESULT_OK) {
+                getaddresslist()
+            }
         }
     }
     fun successaddresslistfromfirestore(addresslist:ArrayList<Address>){
@@ -92,6 +98,11 @@ class AddressListActivity : BaseActivity() {
             binding.rvAddressList.visibility=View.GONE
             binding.tvNoAddressFound.visibility=View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getaddresslist()
     }
     fun deleteaddresssuccess(){
         hideprogressdialog()

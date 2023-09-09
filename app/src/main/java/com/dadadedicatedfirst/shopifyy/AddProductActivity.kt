@@ -18,6 +18,10 @@ import com.dadadedicatedfirst.shopifyy.firestore.FirestoreClass
 import com.dadadedicatedfirst.shopifyy.models.Product
 import com.dadadedicatedfirst.shopifyy.utils.Constants
 import com.dadadedicatedfirst.shopifyy.utils.GlideLoader
+import java.lang.Math.abs
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.*
 import kotlin.Exception
 
 class AddProductActivity : BaseActivity(), View.OnClickListener {
@@ -137,7 +141,8 @@ private fun uploadproductimage(){
             bindingg.etProductPrice.text.toString().trim{it<=' '},
             bindingg.etProductDescription.text.toString().trim{it<=' '},
             bindingg.etProductQuantity.text.toString().trim{it<= ' '},
-            mproductimageurl
+            mproductimageurl,
+            abs(Random(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)).nextLong()).toString()+"Product"
         )
         FirestoreClass().uploadproductdetails(this@AddProductActivity,product)
 

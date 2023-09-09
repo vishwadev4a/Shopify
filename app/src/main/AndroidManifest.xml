@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Shopify"
         tools:targetApi="31">
         <activity
+            android:name=".MyListOrder"
+            android:exported="false" />
+        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity

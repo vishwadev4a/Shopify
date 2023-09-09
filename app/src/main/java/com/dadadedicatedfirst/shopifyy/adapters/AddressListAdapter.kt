@@ -3,6 +3,7 @@ package com.dadadedicatedfirst.shopifyy.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.dadadedicatedfirst.shopifyy.AddEditAddressActivity
+import com.dadadedicatedfirst.shopifyy.CheckoutActivity
+import com.dadadedicatedfirst.shopifyy.LoginActivity
 import com.dadadedicatedfirst.shopifyy.R
 import com.dadadedicatedfirst.shopifyy.models.Address
 import com.dadadedicatedfirst.shopifyy.utils.Constants
@@ -25,7 +28,7 @@ open class AddressListAdapter(private val context:Context,private val list:Array
     fun notifyedititem(activity:Activity,position: Int){
         val intent= Intent(context,AddEditAddressActivity::class.java)
         intent.putExtra(Constants.EXTRA_ADDRESS_DETAILS,list[position])
-        activity.startActivity(intent)
+        activity.startActivityForResult(intent,Constants.ADD_ADDRESS_REQUEST_CODE)
         notifyItemChanged(position)
 
     }
@@ -38,7 +41,11 @@ open class AddressListAdapter(private val context:Context,private val list:Array
             holder.itemView.findViewById<TextView>(R.id.tv_address_mobile_number).text=model.mobileNumber
             if(selectedaddress){
                 holder.itemView.setOnClickListener{
-                    Toast.makeText(context,"Selected address: ${model.address},${model.zipCode}",Toast.LENGTH_SHORT).show()
+
+
+                    val intent=Intent(context,CheckoutActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_SELECTED_ADDRESS,model)
+                    context.startActivity(intent)
                 }
             }
         }

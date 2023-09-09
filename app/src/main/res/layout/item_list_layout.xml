@@ -39,13 +39,13 @@
         app:layout_constraintStart_toEndOf="@+id/ll_item_image"
         app:layout_constraintEnd_toStartOf="@+id/ib_delete_product"
         >
-<com.dadadedicatedfirst.shopifyy.utils.MSPTextViewBold
-    android:id="@+id/tv_item_name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textColor="@color/item_value_text_color"
-    android:textSize="@dimen/rv_item_name_textSize"
-    tools:text="Name"/>
+        <com.dadadedicatedfirst.shopifyy.utils.MSPTextViewBold
+            android:id="@+id/tv_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/item_value_text_color"
+            android:textSize="@dimen/rv_item_name_textSize"
+            tools:text="Name"/>
         <com.dadadedicatedfirst.shopifyy.utils.customtextview
             android:id="@+id/tv_item_price"
             android:layout_width="match_parent"
@@ -68,7 +68,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ll_product_details"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -330,6 +330,9 @@
 
     <!-- Black -->
     <color name="black">#000000</color>
+
+    <color name="orderinprocess">#FF9800</color>
+    <color name="orderdelivered">#8BC34A</color>
     <!-- Black -->
 
     <!-- White -->

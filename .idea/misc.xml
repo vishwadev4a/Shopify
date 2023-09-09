@@ -37,11 +37,15 @@
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_address_list.xml" value="0.2" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_cart_list.xml" value="0.2" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_checkout.xml" value="0.264" />
+        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_checkout2.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_dash_board.xml" value="0.152" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_forgot_password.xml" value="0.2" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_login.xml" value="0.176" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_main.xml" value="0.25677083333333334" />
+        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_my_list_order.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_my_order_list.xml" value="0.25677083333333334" />
+        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_myorderlist.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_product_details.xml" value="0.128" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_register_activty.xml" value="0.12" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/activity_settings.xml" value="0.21403508771929824" />
@@ -52,7 +56,7 @@
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_notifications.xml" value="0.25677083333333334" />
-        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_orders.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_orders.xml" value="0.2" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_product.xml" value="0.16259057971014493" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/fragment_products.xml" value="0.176" />
         <entry key="..\:/Users/Vishu/AndroidStudioProjects/Shopify/app/src/main/res/layout/item_address_layout.xml" value="0.2" />
